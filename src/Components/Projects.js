@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
 import ProjectItem from "./ProjectItem";
+import PropTypes from 'prop-types';
 
 class Projects extends Component {
+
+    deleteProject(id){
+        this.props.onDelete(id);
+    }
 
     render() {
         let projectItems;
@@ -9,18 +14,26 @@ class Projects extends Component {
             projectItems = this.props.projects.map(project => {
                 //console.log(project);
                 return (
-                    <ProjectItem key={project.title} project={project}/>
+                    <ProjectItem onDelete={this.deleteProject.bind(this)} key={project.title} project={project}/>
                 )
             });
         }
-        console.log(this.props);
+        //console.log(this.props);
         return (
             < div className="Projects">
-                My Projects
+                <h3>Latest Projects</h3>
+
                 {projectItems}
             </div>
         );
     }
 }
+
+///Adding validations for component
+
+Projects.propTypes = {
+    projects: PropTypes.PropTypes.array,
+    onDelete: PropTypes.PropTypes.func
+};
 
 export default Projects;
